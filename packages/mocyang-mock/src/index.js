@@ -7,7 +7,9 @@
  */
 
 import { createServer } from 'miragejs'
-import { urlNoMock, addressConfig } from './config' // 不想被 migrate 拦截的请求
+// import { urlNoMock, addressConfig } from './config' // 不想被 migrate 拦截的请求
+
+let urlNoMock, addressConfig
 
 export function makeServer({ environment }) {
   createServer({
