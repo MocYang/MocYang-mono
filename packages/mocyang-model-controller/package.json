@@ -1,0 +1,32 @@
+{
+  "name": "mocyang-modle-controller",
+  "license": "MIT",
+  "version": "0.0.1",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build --no-optimize",
+    "build:publish": "parcel build"
+  },
+  "targets": {
+    "main": {
+      "engines": {
+        "node": ">= 12"
+      },
+      "isLibrary": true,
+      "optimize": true
+    },
+    "module": {
+      "engines": {
+        "node": ">= 12"
+      },
+      "isLibrary": true,
+      "optimize": true
+    }
+  },
+  "devDependencies": {
+    "parcel": "latest"
+  }
+}
