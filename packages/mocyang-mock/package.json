@@ -7,8 +7,8 @@
   "module": "dist/index.esm.js",
   "scripts": {
     "watch": "parcel watch",
-    "build": "parcel build --no-optimize",
-    "build:publish": "parcel build"
+    "build": "parcel build",
+    "build:dev": "parcel build --no-optimize"
   },
   "targets": {
     "main": {
@@ -31,5 +31,8 @@
   },
   "dependencies": {
     "miragejs": "^0.1.43"
+  },
+  "repository": {
+    "directory": "https://github.com/MocYang/MocYang-mono/tree/master/packages/mocyang-mock"
   }
 }

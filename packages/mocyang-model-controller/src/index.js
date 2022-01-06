@@ -6,7 +6,12 @@
  * @Description 模型控制器, 处理模型相关逻辑.(添加,删除,更新,查找)
  */
 
-import { isFunction, isArray, extend, NOOP } from '../../mocyang-utils/src'
+import {
+  isFunction,
+  isArray,
+  extend,
+  NOOP
+} from '../../mocyang-utils/src'
 
 class ModelController {
   constructor() {
