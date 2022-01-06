@@ -6,6 +6,11 @@
  * @Description
  */
 
+import debounce from './debounce'
+import throttle from './throttle'
+import querystring from './querystring'
+import random from './random'
+
 const EMPTY_OBJ = (process.env.NODE_ENV !== 'production')
   ? Object.freeze({})
   : {}
@@ -92,3 +97,26 @@ export function until(thisArg, fn, ...args) {
   })
 }
 
+export function getCookie(key) {
+  let arr = document.cookie.replace(/\s/g, '').split(';')
+  for (let i = 0; i < arr.length; i++) {
+    let keyAndValuePair = arr[i].split('=')
+    if (keyAndValuePair[0] === key) {
+      return decodeURIComponent(keyAndValuePair[1])
+    }
+  }
+  return ''
+}
+
+export function setCookie(key, value, timestamps = 0) {
+  let now = new Date()
+  now.setDate(now.getDate() + timestamps)
+  document.cookie += `${key}=${value}`
+}
+
+export {
+  debounce,
+  throttle,
+  querystring,
+  random
+}
