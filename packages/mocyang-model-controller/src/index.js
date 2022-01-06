@@ -11,29 +11,19 @@ import {
   isArray,
   extend,
   NOOP
-} from '../../mocyang-utils/src'
+} from 'mocyang-utils/src'
+import { toTypeString } from 'mocyang-utils'
 
 class ModelController {
   constructor() {
     this.models = {
       id: [],
       // 原始数据和id的映射,用来方便查找
-      data: {
-
-      }
+      data: {}
     }
   }
 
   async load(fetchFn, options) {
-    options = extend({
-      // 是否手动发出请求
-      manual: false,
-
-      onSuccess: NOOP,
-
-      onProgress: NOOP
-    }, options)
-
     if (!isFunction(fetchFn)) {
       throw new Error('Expected a function to fetch data!')
     }
@@ -62,7 +52,7 @@ class ModelController {
     }
     const target = this.models
     // 缓存时,合并已有的数据,并插入新数据
-    target.id  = Array.from(new Set([...target.id, ...source.map(item => item.id)]))
+    target.id = Array.from(new Set([...target.id, ...source.map(item => item.id)]))
     target.data = source.reduce((t, c) => {
       t[c.id] = c
       return t
@@ -81,7 +71,7 @@ class ModelController {
    * @param type 传入的要过滤的函数
    * @returns {*}
    */
-  filter (type) {
+  filter(type) {
     const allModels = this.all()
 
     if (isFunction(type)) {
@@ -105,7 +95,7 @@ class ModelController {
    * @returns {Array<Object>}
    */
   filterIndoor(build, floor) {
-    const allModels  = this.all()
+    const allModels = this.all()
     // "V001_JZ0003#F003" 因为接口数据中的 floor_id 是完整的建筑Id+楼层名, 所以这里进行拼接
     const floorId = `${build}#${floor}`
     return allModels.filter(m => m.build_id === build && m.floor_id === floorId)
@@ -124,34 +114,63 @@ class ModelController {
    * 批量添加模型
    * @param mapV   {Object}
    * @param source {Array<Object>}
-   * @param size   {Number} 每次最多添加200个。不能再多。多了数据传输会失败。
-   * @param cb     {Function}
+   * @param options {Object}
    */
-  batchedAddModel(mapV, source, size = 100, cb) {
-    if (!isArray(source) || size > 200) {
+  batchedAddModel(mapV, source, options) {
+    options = extend({
+      size: 100,
+
+      onSuccess: NOOP,
+
+      // onProgress(): {progress: number}
+      onProgress: NOOP
+    }, options)
+
+    const {
+      size,
+      onSuccess,
+      onProgress
+    } = options
+
+    if (!isArray(source)) {
+      console.error('type source must be an array, got '+ (toTypeString(source)))
       return
     }
-    const start = + new Date()
+
+    const start = +new Date()
     const sourceSize = source.length
     const addModel = (startOffset, endOffset = 0) => {
       const sourceSlice = source.slice(startOffset, endOffset)
       if (startOffset > sourceSize - 1) {
         setTimeout(() => {
-          const end = + new Date()
+          const end = +new Date()
           console.log(`加载 ${sourceSize} 个模型,共耗时: ${(end - start) / 1000}s. `)
-          cb && cb()
+
+          onProgress && onProgress({
+            progress: 100
+          })
+
+          onSuccess && onSuccess()
+
+          // 把所有带有GID的对象的配置，缓存起来。方便后面进一步操作
+
         }, 0)
         return
       }
 
-      // 注意,此功能为异步操作
-      mapV.OverLayerCreateObjects(sourceSlice, (res) => {
-        if (startOffset < sourceSize) {
-          setTimeout(() => {
-            addModel(endOffset, endOffset + size)
-          },  10)
-        }
-      })
+      if (mapV.OverLayerCreateObjects) {
+        // 注意,此功能为异步操作
+        mapV.OverLayerCreateObjects(sourceSlice, (res) => {
+          if (startOffset < sourceSize) {
+            onProgress && onProgress({
+              progress: Math.floor(Math.pow(10, 4) * (startOffset / sourceSize) / 100)
+            })
+            setTimeout(() => {
+              addModel(endOffset, endOffset + size)
+            }, 10)
+          }
+        })
+      }
     }
 
     addModel(0, size)

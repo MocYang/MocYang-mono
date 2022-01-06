@@ -30,6 +30,8 @@
     "parcel": "latest"
   },
   "repository": {
-    "directory": "https://github.com/MocYang/MocYang-mono/tree/master/packages/mocyang-model-controller"
+    "type": "git",
+    "url": "https://github.com/MocYang/MocYang-mono.git",
+    "directory": "packages/mocyang-modle-controller"
   }
 }
