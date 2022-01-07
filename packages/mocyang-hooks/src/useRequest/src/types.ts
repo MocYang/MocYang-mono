@@ -6,7 +6,7 @@
  * @Description
  */
 import type { CachedData } from "./utils/cache";
-
+import Fetch from './fetch'
 export type Service<T, P extends any[]> = (...args: P) => Promise<T>
 
 export type subscribe = () => void
@@ -93,6 +93,6 @@ export interface Result<D, P extends any[]> {
   data?: D;
   error?: Error;
   params: P | [];
-  cancel: Fetch<D, P>['cancel'];
+  cancel: any;
 }
 

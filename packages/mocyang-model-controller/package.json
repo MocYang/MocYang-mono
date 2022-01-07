@@ -1,5 +1,5 @@
 {
-  "name": "mocyang-modle-controller",
+  "name": "mocyang-model-controller",
   "license": "MIT",
   "version": "0.0.1-alpha.1",
   "source": "src/index.js",
@@ -33,5 +33,8 @@
     "type": "git",
     "url": "https://github.com/MocYang/MocYang-mono.git",
     "directory": "packages/mocyang-modle-controller"
+  },
+  "dependencies": {
+    "mocyang-utils": "^0.0.1-alpha.1"
   }
 }

@@ -10,9 +10,9 @@ import {
   isFunction,
   isArray,
   extend,
-  NOOP
-} from 'mocyang-utils/src'
-import { toTypeString } from 'mocyang-utils'
+  NOOP,
+  toTypeString
+} from 'mocyang-utils'
 
 class ModelController {
   constructor() {
