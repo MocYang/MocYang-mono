@@ -1,7 +1,7 @@
 {
   "name": "mocyang-model-controller",
   "license": "MIT",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "source": "src/index.js",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -35,6 +35,6 @@
     "directory": "packages/mocyang-modle-controller"
   },
   "dependencies": {
-    "mocyang-utils": "^0.0.1-alpha.1"
+    "mocyang-utils": "^0.0.1-alpha.2"
   }
 }
