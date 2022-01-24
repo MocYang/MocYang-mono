@@ -6,10 +6,11 @@
  * @Description
  */
 import type { CachedData } from "./utils/cache";
-import Fetch from './fetch'
+import Fetch from './Fetch'
+
 export type Service<T, P extends any[]> = (...args: P) => Promise<T>
 
-export type subscribe = () => void
+export type Subscribe = () => void
 
 export interface FetchState<T, P extends any[]> {
   loading: boolean
@@ -50,8 +51,10 @@ export interface Options<D, P extends any[]> {
 
   defaultParams?: P;
 
+  loadingDelay?: number;
+
   // refreshDeps
-  refreshDeps?: number;
+  refreshDeps?: Array<unknown>;
   refreshDepsAction?: () => void;
 
   // polling
@@ -86,13 +89,23 @@ export interface Options<D, P extends any[]> {
   ready?: boolean; // ?
 }
 
-export type Plugin<D, P extends any[]> = {}
+export type Plugin<D, P extends any[]> = {
+  (fetchInstance: Fetch<D, P>, options: Options<D, P>): PluginReturn<D, P>
+  onInit?: (options: Options<D, P>) => Partial<FetchState<D, P>>
+}
 
 export interface Result<D, P extends any[]> {
-  loading: boolean;
-  data?: D;
-  error?: Error;
-  params: P | [];
-  cancel: any;
+  loading: boolean
+  data?: D
+  error?: Error
+  params: P | []
+  cancel: any
+  refresh: Fetch<D, P>['refresh']
+  refreshAsync: Fetch<D, P>['refreshAsync']
+  run: Fetch<D, P>['run']
+  runAsync: Fetch<D, P>['runAsync']
+  mutate: Fetch<D, P>['mutate']
 }
+
+export type Timeout = ReturnType<typeof setTimeout>
 
