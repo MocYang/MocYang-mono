@@ -11,7 +11,7 @@ import type { Options, Plugin, Result, Service } from './types'
 
 function useRequestImplement<D, P extends any[]> (
   service: Service<D, P>,
-  options: Options<D, P>,
+  options: Options<D, P> = {},
   plugins: Plugin<D, P>[] = []
 ){
 

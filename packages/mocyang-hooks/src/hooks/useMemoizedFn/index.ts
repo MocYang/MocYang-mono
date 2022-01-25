@@ -27,3 +27,4 @@ function useMemoizedFn<T extends noop>(fn: T) {
   return memoizedFn.current
 }
 
+export default useMemoizedFn

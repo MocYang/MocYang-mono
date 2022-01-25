@@ -5,7 +5,7 @@
  * @File: types.js
  * @Description
  */
-import type { CachedData } from "./utils/cache";
+import type { CachedData } from "./utils/cache"
 import Fetch from './Fetch'
 
 export type Service<T, P extends any[]> = (...args: P) => Promise<T>
