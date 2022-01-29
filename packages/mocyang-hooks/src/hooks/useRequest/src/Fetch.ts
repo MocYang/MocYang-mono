@@ -1,10 +1,11 @@
 import type { MutableRefObject } from "react"
-import { FetchState, Service, Options, Subscribe, PluginReturn } from "./types";
+import { FetchState, Service, Options, Subscribe, PluginReturn } from "./types"
 
 export default class Fetch<D, P extends any[]> {
-  pluginImpls: any;
+  // delete unkown type.
+  pluginImpls: PluginReturn<D, P>[] | unknown
 
-  count: number = 0;
+  count: number = 0
 
   state: FetchState<D, P> = {
     loading: false,
@@ -90,7 +91,6 @@ export default class Fetch<D, P extends any[]> {
       this.runPluginHandler('onSuccess', res, params)
 
       this.options?.onFinally?.(params, res, undefined)
-
 
       if (currentCount === this.count) {
         this.runPluginHandler('onFinally', params, res, undefined)

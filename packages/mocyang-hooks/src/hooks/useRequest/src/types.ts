@@ -99,7 +99,7 @@ export interface Result<D, P extends any[]> {
   data?: D
   error?: Error
   params: P | []
-  cancel: any
+  cancel: Fetch<D, P>['cancel']
   refresh: Fetch<D, P>['refresh']
   refreshAsync: Fetch<D, P>['refreshAsync']
   run: Fetch<D, P>['run']

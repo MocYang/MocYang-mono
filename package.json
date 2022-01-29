@@ -22,7 +22,11 @@
     "prettier": "^2.5.1",
     "typescript": ">=3.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.isequal": "^4.5.5",
+    "@types/throttle": "^1.0.1"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "prettier"
